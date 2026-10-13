@@ -1,0 +1,12 @@
+{
+  "api_version": "1.54.0",
+  "source_commit": "47edbc2f6f9f960bf3226ab4c932660cf947c4fe",
+  "sha256": "dd8a500f064cac27f8ea6f5e76e8cabdf48b5c6347116bbb06c3f4fcd16258de",
+  "source_sha256": "a20321730834886dc6b053e016ede1bbba8a84823bb8c808f8a4a922f2d1241b",
+  "transformations": [
+    {
+      "json_pointer": "/components/securitySchemes/ApiKeyAuth/description",
+      "operation": "Replace the concrete API key example with ADANOS_API_KEY; preserve the sk_live_ prefix and hexadecimal format documentation."
+    }
+  ]
+}
