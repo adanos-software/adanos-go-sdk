@@ -109,7 +109,7 @@ func sameOrigin(origin *url.URL, req *http.Request) bool {
 		return false
 	}
 	if req.URL.Opaque == "" {
-		return true
+		return strings.HasPrefix(req.URL.RequestURI(), "/")
 	}
 	wireURL, err := url.ParseRequestURI(req.URL.RequestURI())
 	return err == nil && wireURL.Opaque == "" &&

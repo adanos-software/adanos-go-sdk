@@ -410,7 +410,7 @@ func TestRedirectsAndInjectedClient(t *testing.T) {
 }
 
 func TestRedirectHostThroughProxy(t *testing.T) {
-	for _, mode := range []string{"foreign-host", "foreign-opaque", "foreign-opaque-authority", "same-origin-host", "empty-host", "same-origin-opaque-authority", "same-origin-opaque-absolute", "same-origin-opaque-path"} {
+	for _, mode := range []string{"foreign-host", "foreign-opaque", "foreign-opaque-authority", "foreign-path", "foreign-rawpath", "foreign-connect-authority", "same-origin-host", "empty-host", "same-origin-opaque-authority", "same-origin-opaque-absolute", "same-origin-opaque-path", "same-origin-escaped-path", "same-origin-query-fragment"} {
 		t.Run(mode, func(t *testing.T) {
 			var foreignRequests, originRequests, proxyRequests, callbacks atomic.Int64
 			var foreignKey atomic.Value
@@ -425,7 +425,7 @@ func TestRedirectHostThroughProxy(t *testing.T) {
 				if r.Header.Get("X-API-Key") != "synthetic-proxy-test-key" {
 					t.Error("origin did not receive the synthetic key")
 				}
-				if r.URL.Path == "/done" || r.URL.EscapedPath() == "/done/%2F/%25/%3F/NU.V" {
+				if r.URL.Path == "/done" || r.URL.EscapedPath() == "/done/%2F/%25/%3F/NU.V" || strings.HasPrefix(r.URL.Path, "/done/@") {
 					io.WriteString(w, `{"status":"healthy"}`)
 					return
 				}
@@ -470,6 +470,16 @@ func TestRedirectHostThroughProxy(t *testing.T) {
 					r.URL.Opaque = foreign.URL + "/done"
 				case "foreign-opaque-authority":
 					r.URL.Opaque = "//" + foreignURL.Host + "/done"
+				case "foreign-path":
+					r.URL.Path = "@" + foreignURL.Host + "/done"
+					r.URL.RawPath = ""
+				case "foreign-rawpath":
+					r.URL.Path = "@" + foreignURL.Host + "/done/x"
+					r.URL.RawPath = "@" + foreignURL.Host + "/done/%78"
+				case "foreign-connect-authority":
+					r.Method = http.MethodConnect
+					r.URL.Path = ""
+					r.URL.Opaque = foreignURL.Host
 				case "same-origin-host":
 					r.Host = originURL.Host
 				case "empty-host":
@@ -480,6 +490,12 @@ func TestRedirectHostThroughProxy(t *testing.T) {
 					r.URL.Opaque = origin.URL + "/done/%2F/%25/%3F/NU.V"
 				case "same-origin-opaque-path":
 					r.URL.Opaque = "/done/%2F/%25/%3F/NU.V"
+				case "same-origin-escaped-path":
+					r.URL.Path = "/done/@" + foreignURL.Host + "/x"
+					r.URL.RawPath = "/done/@" + foreignURL.Host + "/%78"
+				case "same-origin-query-fragment":
+					r.URL.RawQuery = "@" + foreignURL.Host + "/done"
+					r.URL.Fragment = foreign.URL + "/done"
 				}
 				return nil
 			}
