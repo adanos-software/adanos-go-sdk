@@ -44,7 +44,7 @@ func receipt(t *testing.T, input, result any) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, strings.ReplaceAll(t.Name(), "/", "_")+".json"), data, 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, url.QueryEscape(t.Name())+".json"), data, 0644); err != nil {
 		t.Fatal(err)
 	}
 }
