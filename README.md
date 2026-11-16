@@ -1,7 +1,7 @@
 # Adanos Go SDK
 
 Go client for the [Adanos Market Sentiment API](https://api.adanos.com/docs), generated from API **1.55.0**.
-Version **1.0.0** covers all 53 operations and 113 schemas exposed by the API contract.
+Version **1.0.1** covers all 53 operations and 113 schemas exposed by the API contract.
 The SDK requires Go 1.26 or newer and uses only the Go standard library.
 
 ## Install

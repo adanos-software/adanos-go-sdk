@@ -11,7 +11,7 @@ import (
 
 const (
 	// Version is the SDK release version.
-	Version = "1.0.0"
+	Version = "1.0.1"
 	// APIVersion is the API contract used to generate the SDK models.
 	APIVersion = "1.55.0"
 	// DefaultBaseURL is the public Adanos API endpoint.

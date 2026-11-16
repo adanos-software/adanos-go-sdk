@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.1 - 2026-11-16
+
 - Refresh the frozen OpenAPI contract and generated model documentation for API 1.55.0.
 - Document Polymarket Instrument Graph keys, ticker migration, and lookup errors.
 - Verify Graph-key spelling, nullable metrics, and 404/422/503 errors through local HTTP tests.
