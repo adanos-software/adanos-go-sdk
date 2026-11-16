@@ -1,8 +1,9 @@
 {
-  "api_version": "1.54.0",
-  "source_commit": "47edbc2f6f9f960bf3226ab4c932660cf947c4fe",
-  "sha256": "dd8a500f064cac27f8ea6f5e76e8cabdf48b5c6347116bbb06c3f4fcd16258de",
-  "source_sha256": "a20321730834886dc6b053e016ede1bbba8a84823bb8c808f8a4a922f2d1241b",
+  "api_version": "1.55.0",
+  "source_url": "https://api.adanos.org/openapi.json",
+  "retrieved_at_utc": "2026-11-16T08:47:09.861176+00:00",
+  "sha256": "9cfd7f6f2984f8e70a11df43682fec3d6fb76d151609db49769f5f592fd8cf8d",
+  "source_sha256": "d2bd57b649abc51967e6f6fc1b315a2417c56b5da44dbe14ba45ceae1000b8fe",
   "transformations": [
     {
       "json_pointer": "/components/securitySchemes/ApiKeyAuth/description",

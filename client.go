@@ -13,7 +13,7 @@ const (
 	// Version is the SDK release version.
 	Version = "1.0.0"
 	// APIVersion is the API contract used to generate the SDK models.
-	APIVersion = "1.54.0"
+	APIVersion = "1.55.0"
 	// DefaultBaseURL is the public Adanos API endpoint.
 	DefaultBaseURL = "https://api.adanos.com"
 )

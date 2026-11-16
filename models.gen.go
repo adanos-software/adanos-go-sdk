@@ -1,4 +1,4 @@
-// Code generated from API 1.54.0, SHA-256 dd8a500f064cac27f8ea6f5e76e8cabdf48b5c6347116bbb06c3f4fcd16258de; DO NOT EDIT.
+// Code generated from API 1.55.0, SHA-256 9cfd7f6f2984f8e70a11df43682fec3d6fb76d151609db49769f5f592fd8cf8d; DO NOT EDIT.
 
 package adanos
 
@@ -542,7 +542,7 @@ type NewsMarketSentimentResponse struct {
 	BullishPct int64 `json:"bullish_pct"`
 	// BuzzScore: Service-wide News heat score relative to the service's trailing 90-day baseline. Around 50 = normal coverage heat, higher values = hotter-than-usual coverage.
 	BuzzScore *float64 `json:"buzz_score"`
-	// Drivers: Top assets by current buzz_score driving the service-level reading
+	// Drivers: Top 5 stocks of the selected period by buzz_score. mentions and sentiment_score cover every day of the period.
 	Drivers []NewsMarketSentimentDriver `json:"drivers,omitempty"`
 	// Mentions: News mentions across the selected period
 	Mentions int64 `json:"mentions"`
@@ -824,7 +824,7 @@ type PolymarketCompareStockItem struct {
 	BullishPct *int64 `json:"bullish_pct,omitempty"`
 	// BuzzScore: Buzz score (0-100)
 	BuzzScore *float64 `json:"buzz_score"`
-	// CompanyName: Company name
+	// CompanyName: Instrument Graph company name; the product name for an ETF; null for a key that is not a Graph key
 	CompanyName *string `json:"company_name,omitempty"`
 	// CurrentMarketCount: Number of currently open markets in the latest UTC-day snapshot for ticker; use this for live-only market breadth
 	CurrentMarketCount int64 `json:"current_market_count"`
@@ -832,7 +832,7 @@ type PolymarketCompareStockItem struct {
 	MarketCount int64 `json:"market_count"`
 	// SentimentScore: Orderbook-aware implied sentiment; null when no directional sentiment evidence exists in the selected period
 	SentimentScore *float64 `json:"sentiment_score,omitempty"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)
 	Ticker string `json:"ticker"`
 	// TotalLiquidity: Windowed aggregated liquidity signal in USD over the selected period; not a current snapshot
 	TotalLiquidity float64 `json:"total_liquidity"`
@@ -886,7 +886,7 @@ type PolymarketMarketSentimentDriver struct {
 	BuzzScore *float64 `json:"buzz_score"`
 	// SentimentScore: Implied sentiment score for this asset in the selected period
 	SentimentScore *float64 `json:"sentiment_score,omitempty"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)
 	Ticker string `json:"ticker"`
 	// TradeCount: Trade count for this asset in the selected period
 	TradeCount int64 `json:"trade_count"`
@@ -1001,7 +1001,7 @@ type PolymarketRawMentionsResponse struct {
 	PeriodDays int64 `json:"period_days"`
 	// Results: Raw market snapshot rows ordered by newest first
 	Results []PolymarketRawMentionItem `json:"results"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)
 	Ticker string `json:"ticker"`
 }
 
@@ -1035,21 +1035,21 @@ type PolymarketSearchResponse struct {
 
 // PolymarketSearchResultItem: Individual Polymarket search result item.
 type PolymarketSearchResultItem struct {
-	// Aliases: Alternative names/aliases
+	// Aliases: Instrument Graph names and listing symbols the company is matched by
 	Aliases []string `json:"aliases,omitempty"`
-	// Country: Country of headquarters
+	// Country: Issuer country, else the primary listing's country
 	Country *string `json:"country,omitempty"`
-	// Exchange: Stock exchange
+	// Exchange: Exchange of the key's primary listing
 	Exchange *string `json:"exchange,omitempty"`
-	// Name: Company name
+	// Name: Instrument Graph company name; the product name for an ETF
 	Name string `json:"name"`
-	// Sector: Industry sector
+	// Sector: Issuer sector; null for ETFs
 	Sector *string `json:"sector,omitempty"`
 	// Summary: Last-7-days Polymarket summary for this asset
 	Summary PolymarketSearchSummary `json:"summary"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG); the key every Polymarket endpoint accepts
 	Ticker string `json:"ticker"`
-	// Type: Asset type (Stock, ETF, etc.)
+	// Type: Instrument Graph asset type: Stock or ETF
 	Type *string `json:"type,omitempty"`
 }
 
@@ -1071,7 +1071,7 @@ type PolymarketStatsResponse struct {
 	OpenMarketsCurrent *int64 `json:"open_markets_current,omitempty"`
 	// OpenTickersCurrent: Distinct tickers with at least one currently open Polymarket market
 	OpenTickersCurrent *int64 `json:"open_tickers_current,omitempty"`
-	// SupportedTickers: Number of supported stock tickers
+	// SupportedTickers: Number of Instrument Graph keys Polymarket accepts (company keys and ETF product keys), as on News
 	SupportedTickers int64 `json:"supported_tickers"`
 	// TotalMarkets: Distinct Polymarket condition_id count
 	TotalMarkets int64 `json:"total_markets"`
@@ -1095,7 +1095,7 @@ type PolymarketStockDetailResponse struct {
 	BullishPct *int64 `json:"bullish_pct,omitempty"`
 	// BuzzScore: Buzz score (0-100)
 	BuzzScore *float64 `json:"buzz_score,omitempty"`
-	// CompanyName: Company name
+	// CompanyName: Instrument Graph company name; the product name for an ETF
 	CompanyName *string `json:"company_name,omitempty"`
 	// CurrentMarketCount: Number of currently open markets in the latest UTC-day snapshot for ticker; use this for live-only market breadth
 	CurrentMarketCount *int64 `json:"current_market_count,omitempty"`
@@ -1121,7 +1121,7 @@ type PolymarketStockDetailResponse struct {
 	Pulse *PolymarketTickerPulse `json:"pulse,omitempty"`
 	// SentimentScore: Orderbook-aware implied sentiment; null when no directional sentiment evidence exists in the selected period
 	SentimentScore *float64 `json:"sentiment_score,omitempty"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)
 	Ticker string `json:"ticker"`
 	// TopMentions: Top markets with an active/open snapshot during the retained snapshot portion of the selected UTC-day period for this ticker (including the current UTC day so far), capped at 10 and sorted as representative sentiment evidence: outcome-aware directional markets first, opposing signals kept visible when present, then trade count, with non-open markets de-prioritized and 24h volume and liquidity as tie-breakers. For windows longer than raw snapshot retention, ticker analytics still use daily aggregates, while this list is limited to retained market snapshots. Item prices and liquidity come from the selected in-period snapshot, not necessarily the current market state. `active` indicates whether the market is currently open, so historical in-period evidence can now have a non-open current state. `market_status` gives the compact current state.
 	TopMentions []PolymarketTopMention `json:"top_mentions,omitempty"`
@@ -1253,7 +1253,7 @@ type PolymarketTrendingStock struct {
 	BullishPct int64 `json:"bullish_pct"`
 	// BuzzScore: Polymarket activity/flow discovery score (0-100); not directional sentiment
 	BuzzScore *float64 `json:"buzz_score"`
-	// CompanyName: Company name
+	// CompanyName: Instrument Graph company name; the product name for an ETF
 	CompanyName *string `json:"company_name,omitempty"`
 	// CurrentMarketCount: Number of currently open markets in the latest UTC-day snapshot for ticker; use this for live-only market breadth
 	CurrentMarketCount int64 `json:"current_market_count"`
@@ -1261,7 +1261,7 @@ type PolymarketTrendingStock struct {
 	MarketCount int64 `json:"market_count"`
 	// SentimentScore: Orderbook-aware implied sentiment (-1 to +1); null when no directional sentiment evidence exists in the selected period
 	SentimentScore *float64 `json:"sentiment_score,omitempty"`
-	// Ticker: Stock ticker symbol
+	// Ticker: Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)
 	Ticker string `json:"ticker"`
 	// TotalLiquidity: Windowed aggregated liquidity signal in USD over the selected period; not a current snapshot
 	TotalLiquidity float64 `json:"total_liquidity"`

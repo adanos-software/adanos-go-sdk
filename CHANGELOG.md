@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Refresh the frozen OpenAPI contract and generated model documentation for API 1.55.0.
+- Document Polymarket Instrument Graph keys, ticker migration, and lookup errors.
+- Verify Graph-key spelling, nullable metrics, and 404/422/503 errors through local HTTP tests.
+
 ## 1.0.0
 
 Initial Go SDK release for Adanos API 1.54.0.

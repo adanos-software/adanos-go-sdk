@@ -1,6 +1,6 @@
 # Adanos Go SDK
 
-Go client for the [Adanos Market Sentiment API](https://api.adanos.com/docs), generated from API **1.54.0**.
+Go client for the [Adanos Market Sentiment API](https://api.adanos.com/docs), generated from API **1.55.0**.
 Version **1.0.0** covers all 53 operations and 113 schemas exposed by the API contract.
 The SDK requires Go 1.26 or newer and uses only the Go standard library.
 
@@ -93,8 +93,15 @@ and empty strings. The server applies defaults and validates date windows and li
 `Source` applies only to News trending endpoints. `IncludeInherited` applies only to
 Reddit Stocks and Reddit Crypto mentions.
 
-Ticker and symbol spelling remains unchanged, including News exchange suffixes such as `NU.V` and `BRK.A`.
-Comparison lists are sent as one comma-separated query value.
+The SDK sends ticker and symbol spelling unchanged. News and Polymarket use Instrument Graph
+keys: one company key for its stocks, ADRs and share classes, and separate keys for ETFs.
+Documented venue suffixes such as `SAP.DE` remain valid. Use `BRK`, not `BRK.A` or `BRK-B`.
+Polymarket keys changed from `BK` to `BNY` and `DAX` to `EWG`; use `Search` to find the current key.
+Detail and mentions return `404` for keys absent from the Graph, `422` for invalid spelling
+(including cashtags and share classes), and `503` when the Graph is unavailable.
+Compare sends the supplied keys without alias rewriting; unknown keys keep a zero-activity row
+without a company name. Comparison lists are sent as one comma-separated query value.
+Unavailable `buzz_score` and raw `strike_price` values remain nil, distinct from zero.
 
 ## Analyze text
 
