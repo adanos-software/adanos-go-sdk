@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Adanos Market Sentiment API",
+    "title": "Adanos Market Sentiment API documentation",
     "description": "\nThe Adanos API measures how much attention stocks and crypto tokens get on **Reddit**, **X/Twitter**, **financial news** and **Polymarket**. It shows whether that attention is bullish or bearish. A separate endpoint scores the sentiment of financial text you send. Reference coverage is 35,000+ stock tickers.\n\nThe core concepts across the API are **Buzz Score**, **Trend Detection** and directional **Sentiment**: they show what is moving, in which direction and on which platform.\n\n## Quickstart\n\n1. Create a free API key at [adanos.com/register](https://adanos.com/register). Store it in `ADANOS_API_KEY`, not in browser code or public repositories.\n2. Send it in the `X-API-Key` header. This call returns the three stocks with the most Reddit attention today (response shortened):\n\n```bash\ncurl \"https://api.adanos.com/reddit/stocks/v1/trending?limit=3\" \\\n  -H \"X-API-Key: $ADANOS_API_KEY\"\n```\n\n```json\n[\n  {\n    \"ticker\": \"TSLA\",\n    \"company_name\": \"Tesla, Inc.\",\n    \"buzz_score\": 87.5,\n    \"trend\": \"rising\",\n    \"sentiment_score\": 0.23\n  }\n]\n```\n\n## Platforms\n\n| Platform | Base path |\n|----------|-----------|\n| Reddit Stocks | `/reddit/stocks/v1` |\n| X/Twitter Stocks | `/x/stocks/v1` |\n| News Stocks | `/news/stocks/v1` |\n| Polymarket Stocks | `/polymarket/stocks/v1` |\n| Reddit Crypto | `/reddit/crypto/v1` |\n| Finance Sentiment | `/sentiment/v1` |\n\nEach stock platform offers `/trending`, `/stock/{ticker}`, `/compare` and `/search`.\n\n## Key metrics\n\n| Field | Meaning |\n|-------|---------|\n| `buzz_score` | Attention on one platform, from 0 to 100 |\n| `sentiment_score` | From `-1.0` (bearish) to `+1.0` (bullish). `null` when too few mentions take a side. |\n| `bullish_pct`, `bearish_pct` | Share of directional mentions that are bullish or bearish, in percent |\n| `trend` | `rising`, `falling` or `stable`. Compares activity in the last 3 days with the 3 days before; the share price plays no part. |\n\nA `null` value means the field has no data for this asset and period.\n\n## Limits and errors\n\n- Free keys allow 250 requests per month, 100 per minute and 30 days of history. The `X-RateLimit-*` headers show what is left.\n- After a `429`, wait the number of seconds in `Retry-After`. The monthly quota resets at `X-RateLimit-Reset-Monthly`.\n- Errors return JSON with a `detail` field. It holds a message, a list of invalid fields or an object with a `message`.\n- Responses carry an `X-Request-ID` header. Include it when you contact [support@adanos.com](mailto:support@adanos.com).\n\n## Notes\n\n- Set the period with `from` and `to` (UTC dates, `YYYY-MM-DD`). Without them, `/trending` and `/market-sentiment` show the current day. `/stock/{ticker}` and `/compare` show the last 7 days.\n- For AI agents, [`/llms.txt`](/llms.txt) describes the whole API in plain text.\n\n",
     "termsOfService": "https://adanos.com/terms",
     "contact": {
@@ -13,7 +13,7 @@
       "name": "MIT (OpenAPI document only)",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "version": "1.54.0"
+    "version": "1.55.0"
   },
   "servers": [
     {
@@ -189,7 +189,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -1419,7 +1419,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -2104,7 +2104,7 @@
                   "explanation": "GME is trending due to viral GameStop social media activity and large position posts on r/Superstonk.",
                   "cached": true,
                   "generated_at": "2026-01-13T14:30:00+00:00",
-                  "model": "google/gemma-4-31B-it-turbo"
+                  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017"
                 }
               }
             },
@@ -2527,7 +2527,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -3938,7 +3938,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -4348,7 +4348,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -5128,7 +5128,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -6558,7 +6558,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -7724,7 +7724,7 @@
                   ],
                   "top_tweets": [
                     {
-                      "text_snippet": "$TSLA breaking out! \ud83d\ude80",
+                      "text_snippet": "$TSLA breaking out! 🚀",
                       "sentiment_score": 0.85,
                       "sentiment_label": "positive",
                       "likes": 1247,
@@ -7759,7 +7759,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -8444,7 +8444,7 @@
                   "explanation": "GME is trending due to viral GameStop social media activity and large position posts on r/Superstonk.",
                   "cached": true,
                   "generated_at": "2026-01-13T14:30:00+00:00",
-                  "model": "google/gemma-4-31B-it-turbo"
+                  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017"
                 }
               }
             },
@@ -8844,7 +8844,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -10275,7 +10275,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -11342,7 +11342,7 @@
           "Polymarket Stocks"
         ],
         "summary": "Stock sentiment",
-        "description": "Returns Polymarket-based sentiment and activity for one stock ticker.\n\nThe response combines:\n- Period metrics for the date window defined by `from`/`to`.\n- Representative market-level evidence in `top_mentions`.\n- A compact current market read in `pulse`.\n\n**Fields:**\n- `sentiment_score`, `bullish_pct`, `bearish_pct`: outcome-aware sentiment derived from Polymarket market prices and outcomes\n- `buzz_score`: normalized activity score for the selected period; both bullish and bearish activity can increase buzz\n- `trend`: recent flow momentum, comparing the current 3 UTC days with the previous 3 UTC days using trades, volume, market breadth and liquidity; this is not stock price movement\n- `trade_count`, `market_count`, `unique_traders`, `total_liquidity`: period activity, breadth, observed participation and liquidity\n- `daily_trend`: daily activity and sentiment values for the selected window\n- `top_mentions`: representative Polymarket markets behind the ticker-level signals, including market-level `sentiment_score` and `buzz_score`\n- `pulse`: compact current interpretation from the latest stored open-market snapshots\n\n**Notes:**\n- `pulse` describes the current state and does not repeat the aggregate fields. Use `top_mentions` for concrete market examples.\n- `top_mentions` includes only markets observed active/open in the selected period; ranking prioritizes outcome-aware directional evidence, keeps opposing signals visible when present, then uses trade count, market status, volume and liquidity as tie-breakers.\n- Prices, volume and liquidity in `top_mentions` come from the selected in-period snapshot, not necessarily the latest live market state.\n- `active` indicates whether the market is currently open, so older in-period evidence can now be inactive, resolved or expired.\n- `market_status` can be `tradable`, `open`, `resolved`, `expired` or `inactive`.\n- For windows longer than snapshot retention, aggregate metrics still come from daily aggregates, while `top_mentions` is limited to retained market snapshots.\n- Returns `200` with `found: false` when the ticker is supported but this service has no qualifying data in the requested window. Returns `404` only when the ticker is unsupported.",
+        "description": "Returns Polymarket-based sentiment and activity for one stock ticker.\n\nThe response combines:\n- Period metrics for the date window defined by `from`/`to`.\n- Representative market-level evidence in `top_mentions`.\n- A compact current market read in `pulse`.\n\n**Fields:**\n- `sentiment_score`, `bullish_pct`, `bearish_pct`: outcome-aware sentiment derived from Polymarket market prices and outcomes\n- `buzz_score`: normalized activity score for the selected period; both bullish and bearish activity can increase buzz\n- `trend`: recent flow momentum, comparing the current 3 UTC days with the previous 3 UTC days using trades, volume, market breadth and liquidity; this is not stock price movement\n- `trade_count`, `market_count`, `unique_traders`, `total_liquidity`: period activity, breadth, observed participation and liquidity\n- `daily_trend`: daily activity and sentiment values for the selected window\n- `top_mentions`: representative Polymarket markets behind the ticker-level signals, including market-level `sentiment_score` and `buzz_score`\n- `pulse`: compact current interpretation from the latest stored open-market snapshots\n\n**Notes:**\n- `pulse` describes the current state and does not repeat the aggregate fields. Use `top_mentions` for concrete market examples.\n- `top_mentions` includes only markets observed active/open in the selected period; ranking prioritizes outcome-aware directional evidence, keeps opposing signals visible when present, then uses trade count, market status, volume and liquidity as tie-breakers.\n- Prices, volume and liquidity in `top_mentions` come from the selected in-period snapshot, not necessarily the latest live market state.\n- `active` indicates whether the market is currently open, so older in-period evidence can now be inactive, resolved or expired.\n- `market_status` can be `tradable`, `open`, `resolved`, `expired` or `inactive`.\n- For windows longer than snapshot retention, aggregate metrics still come from daily aggregates, while `top_mentions` is limited to retained market snapshots.\n- `ticker` is an Instrument Graph key: a stock's company key (`SKHY` for SK hynix, `BNY`), an ETF's product key (`EWG`). Use `/search` to find a key by name or listing symbol.\n- Returns `200` with `found: false` when the key is a Graph key but this service has no qualifying data in the requested window. Returns `404` when the key is not a Graph key, including keys used before the Graph switch (for example `BK`, `DAX`); there is no fallback or redirect. Returns `503` when the key lookup is unavailable.",
         "operationId": "getPolymarketStock",
         "security": [
           {
@@ -11356,15 +11356,16 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^\\$?(?:[A-Za-z0-9]{1,8}[.-][A-Za-z]|[A-Za-z0-9]{0}[A-Za-z][A-Za-z0-9]{0,9}|[A-Za-z0-9]{1}[A-Za-z][A-Za-z0-9]{0,8}|[A-Za-z0-9]{2}[A-Za-z][A-Za-z0-9]{0,7}|[A-Za-z0-9]{3}[A-Za-z][A-Za-z0-9]{0,6}|[A-Za-z0-9]{4}[A-Za-z][A-Za-z0-9]{0,5}|[A-Za-z0-9]{5}[A-Za-z][A-Za-z0-9]{0,4}|[A-Za-z0-9]{6}[A-Za-z][A-Za-z0-9]{0,3}|[A-Za-z0-9]{7}[A-Za-z][A-Za-z0-9]{0,2}|[A-Za-z0-9]{8}[A-Za-z][A-Za-z0-9]{0,1}|[A-Za-z0-9]{9}[A-Za-z][A-Za-z0-9]{0,0}|[0-9]{3,10})$",
-              "description": "Stock ticker symbol (e.g., TSLA, $AAPL, BRK.A)",
+              "pattern": "^(?=[A-Za-z0-9.]{1,32}$)[A-Za-z0-9]+(?:\\.(?:[Aa][Ee]|[Aa][Ss]|[Aa][Tt]|[Aa][Xx]|[Bb][Aa]|[Bb][Dd]|[Bb][Kk]|[Bb][Oo]|[Bb][Rr]|[Cc][Aa]|[Cc][Ll]|[Cc][Nn]|[Cc][Oo]|[Dd][Ee]|[Dd][Uu]|[Ff]|[Hh][Aa]|[Hh][Ee]|[Hh][Kk]|[Hh][Mm]|[Ii][Cc]|[Ii][Rr]|[Ii][Ss]|[Jj][Kk]|[Jj][Oo]|[Kk][Ll]|[Kk][Qq]|[Kk][Ss]|[Kk][Ww]|[Ll]|[Ll][Ss]|[Mm][Cc]|[Mm][Ii]|[Mm][Uu]|[Mm][Xx]|[Nn][Ee]|[Nn][Ss]|[Nn][Zz]|[Oo][Ll]|[Pp][Aa]|[Pp][Rr]|[Pp][Ss]|[Qq][Aa]|[Rr][Oo]|[Ss][Aa]|[Ss][Aa][Uu]|[Ss][Gg]|[Ss][Ii]|[Ss][Nn]|[Ss][Ss]|[Ss][Tt]|[Ss][Ww]|[Ss][Zz]|[Tt]|[Tt][Aa]|[Tt][Oo]|[Tt][Ww]|[Tt][Ww][Oo]|[Vv]|[Vv][Ii]|[Vv][Nn]|[Ww][Aa]))?$(?![\\s\\S])",
+              "description": "Instrument Graph key, case-insensitive: the company key for a stock (AAPL, BNY, BRK, SKHY), the product key for an ETF (SPY, EWG). 1-32 ASCII letters/digits with an optional documented venue suffix (SAP.DE). Share classes (BRK.A, BRK-B), cashtags and unknown suffixes return 422; other keys that are not Graph keys return 404. Listing aliases and keys used before the Graph switch are not accepted; use `/search` to find a company's key.",
               "examples": [
                 "AAPL",
-                "BRK.A"
+                "SKHY",
+                "EWG"
               ],
               "title": "Ticker"
             },
-            "description": "Stock ticker symbol (e.g., TSLA, $AAPL, BRK.A)"
+            "description": "Instrument Graph key, case-insensitive: the company key for a stock (AAPL, BNY, BRK, SKHY), the product key for an ETF (SPY, EWG). 1-32 ASCII letters/digits with an optional documented venue suffix (SAP.DE). Share classes (BRK.A, BRK-B), cashtags and unknown suffixes return 422; other keys that are not Graph keys return 404. Listing aliases and keys used before the Graph switch are not accepted; use `/search` to find a company's key."
           },
           {
             "name": "from",
@@ -11492,7 +11493,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -11704,11 +11705,11 @@
             }
           },
           "503": {
-            "description": "Database temporarily unavailable",
+            "description": "Instrument Graph key lookup or database service unavailable; no legacy fallback is used",
             "content": {
               "application/json": {
                 "example": {
-                  "detail": "Database temporarily unavailable"
+                  "detail": "Polymarket identity lookup unavailable"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -12143,7 +12144,7 @@
           "Polymarket Stocks"
         ],
         "summary": "Compare stocks",
-        "description": "Compare up to 10 stock or ETF tickers side by side using Polymarket market activity.\n\nUse it for watchlists: one compact row per ticker.\nResults are sorted by `buzz_score` descending and include `trend`, `trend_history`, `trade_count`, `market_count`, `current_market_count`, `unique_traders`, `sentiment_score`, `bullish_pct`, `bearish_pct` and `total_liquidity`.\n`trend` is flow momentum over the current 3 UTC days vs previous 3 UTC days using trades, volume, market breadth and liquidity; not price movement. For `from`/`to`, anchors at `to` (or now when `to` is today).\nEach requested ticker gets one row. Tickers without activity in the period, including unsupported ones, return zeroed metrics. Unsupported tickers have no company name; use `/search` to check support.",
+        "description": "Compare up to 10 stock or ETF tickers side by side using Polymarket market activity.\n\nUse it for watchlists: one compact row per ticker.\nResults are sorted by `buzz_score` descending and include `trend`, `trend_history`, `trade_count`, `market_count`, `current_market_count`, `unique_traders`, `sentiment_score`, `bullish_pct`, `bearish_pct` and `total_liquidity`.\n`trend` is flow momentum over the current 3 UTC days vs previous 3 UTC days using trades, volume, market breadth and liquidity; not price movement. For `from`/`to`, anchors at `to` (or now when `to` is today).\nEach requested ticker gets one row. Tickers are Instrument Graph keys, as on `/stock/{ticker}`; keys used before the Graph switch are not rewritten. Keys without activity in the period, including keys that are not Graph keys, return zeroed metrics. Keys that are not Graph keys have no company name; use `/search` to find a key.",
         "operationId": "comparePolymarketStocks",
         "security": [
           {
@@ -12195,13 +12196,14 @@
             "required": true,
             "schema": {
               "type": "string",
-              "description": "Comma-separated ticker list (max 10)",
+              "maxLength": 512,
+              "description": "Comma-separated Instrument Graph keys (max 10), same grammar as `/stock/{ticker}`. Keys that are not Graph keys return zero-activity rows without a company name.",
               "examples": [
-                "TSLA,NVDA,AMD"
+                "TSLA,NVDA,SKHY"
               ],
               "title": "Tickers"
             },
-            "description": "Comma-separated ticker list (max 10)"
+            "description": "Comma-separated Instrument Graph keys (max 10), same grammar as `/stock/{ticker}`. Keys that are not Graph keys return zero-activity rows without a company name."
           }
         ],
         "responses": {
@@ -12255,7 +12257,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -12467,11 +12469,11 @@
             }
           },
           "503": {
-            "description": "Database temporarily unavailable",
+            "description": "Instrument Graph key lookup or database service unavailable; no legacy fallback is used",
             "content": {
               "application/json": {
                 "example": {
-                  "detail": "Database temporarily unavailable"
+                  "detail": "Polymarket identity lookup unavailable"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -12560,7 +12562,7 @@
           "Polymarket Stocks"
         ],
         "summary": "Search stocks",
-        "description": "Search supported stocks and ETFs, then enrich the matches with Polymarket activity. Results prioritize exact ticker matches first, then prefixes, then name/alias matches and include a compact `summary` block for the last 7 UTC calendar days.",
+        "description": "Search the Instrument Graph's stocks and ETFs by key, company name, alias or listing symbol, then enrich the matches with Polymarket activity. `ticker` is the Graph key every Polymarket endpoint accepts (a stock's company key, an ETF's product key); a listing symbol such as `HXSCL` finds its company here but is not accepted by other endpoints. Results prioritize exact key matches first, then prefixes, then name/alias matches, with Polymarket trade counts breaking ties, and include a compact `summary` block for the last 7 UTC calendar days.",
         "operationId": "searchPolymarketStocks",
         "security": [
           {
@@ -12624,7 +12626,7 @@
                       "country": "United States",
                       "aliases": [
                         "Tesla",
-                        "Elon"
+                        "TSLA"
                       ],
                       "summary": {
                         "trade_count": 14,
@@ -12797,11 +12799,11 @@
             }
           },
           "503": {
-            "description": "Database temporarily unavailable",
+            "description": "Instrument Graph key lookup or database service unavailable; no legacy fallback is used",
             "content": {
               "application/json": {
                 "example": {
-                  "detail": "Database temporarily unavailable"
+                  "detail": "Polymarket identity lookup unavailable"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -13138,7 +13140,7 @@
           "Polymarket Stocks"
         ],
         "summary": "Raw mentions",
-        "description": "Returns raw Polymarket market snapshot rows for a specific ticker within the live raw-data retention window.\n**Professional account required.** Free and Hobby accounts cannot use this endpoint.\n\n**Use this endpoint when you need:**\n- original market questions, prices, liquidity, volume, trade counters and timestamps\n- outcome-aware market price sentiment for individual snapshot rows\n- repeated snapshots for the same market over time\n\n**Notes:**\n- Use `from` and `to` for explicit UTC date windows\n- Results are ordered newest first and support deterministic `offset` + `limit` pagination\n- empty result sets return `200` with `results=[]`\n- The same `condition_id` can appear multiple times across different `fetched_at` snapshots\n- `active` indicates whether the market is currently open, using the latest stored state for that `condition_id`; `market_status` compactly distinguishes `tradable`, `open`, `resolved`, `expired` and `inactive`\n- `buy_trades` and `sell_trades` are activity counters, not bullish/bearish sentiment",
+        "description": "Returns raw Polymarket market snapshot rows for a specific ticker within the live raw-data retention window.\n**Professional account required.** Free and Hobby accounts cannot use this endpoint.\n\n**Use this endpoint when you need:**\n- original market questions, prices, liquidity, volume, trade counters and timestamps\n- outcome-aware market price sentiment for individual snapshot rows\n- repeated snapshots for the same market over time\n\n**Notes:**\n- Use `from` and `to` for explicit UTC date windows\n- Results are ordered newest first and support deterministic `offset` + `limit` pagination\n- Graph keys with no rows return `200` with `results=[]`\n- keys that are not Graph keys return `404`, regardless of the requested window or offset; `503` when the key lookup is unavailable\n- The same `condition_id` can appear multiple times across different `fetched_at` snapshots\n- `active` indicates whether the market is currently open, using the latest stored state for that `condition_id`; `market_status` compactly distinguishes `tradable`, `open`, `resolved`, `expired` and `inactive`\n- `buy_trades` and `sell_trades` are activity counters, not bullish/bearish sentiment",
         "operationId": "getPolymarketStockRawMentions",
         "security": [
           {
@@ -13152,15 +13154,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^\\$?(?:[A-Za-z0-9]{1,8}[.-][A-Za-z]|[A-Za-z0-9]{0}[A-Za-z][A-Za-z0-9]{0,9}|[A-Za-z0-9]{1}[A-Za-z][A-Za-z0-9]{0,8}|[A-Za-z0-9]{2}[A-Za-z][A-Za-z0-9]{0,7}|[A-Za-z0-9]{3}[A-Za-z][A-Za-z0-9]{0,6}|[A-Za-z0-9]{4}[A-Za-z][A-Za-z0-9]{0,5}|[A-Za-z0-9]{5}[A-Za-z][A-Za-z0-9]{0,4}|[A-Za-z0-9]{6}[A-Za-z][A-Za-z0-9]{0,3}|[A-Za-z0-9]{7}[A-Za-z][A-Za-z0-9]{0,2}|[A-Za-z0-9]{8}[A-Za-z][A-Za-z0-9]{0,1}|[A-Za-z0-9]{9}[A-Za-z][A-Za-z0-9]{0,0}|[0-9]{3,10})$",
-              "description": "Stock ticker symbol (e.g., TSLA, $AAPL, BRK.A)",
+              "pattern": "^(?=[A-Za-z0-9.]{1,32}$)[A-Za-z0-9]+(?:\\.(?:[Aa][Ee]|[Aa][Ss]|[Aa][Tt]|[Aa][Xx]|[Bb][Aa]|[Bb][Dd]|[Bb][Kk]|[Bb][Oo]|[Bb][Rr]|[Cc][Aa]|[Cc][Ll]|[Cc][Nn]|[Cc][Oo]|[Dd][Ee]|[Dd][Uu]|[Ff]|[Hh][Aa]|[Hh][Ee]|[Hh][Kk]|[Hh][Mm]|[Ii][Cc]|[Ii][Rr]|[Ii][Ss]|[Jj][Kk]|[Jj][Oo]|[Kk][Ll]|[Kk][Qq]|[Kk][Ss]|[Kk][Ww]|[Ll]|[Ll][Ss]|[Mm][Cc]|[Mm][Ii]|[Mm][Uu]|[Mm][Xx]|[Nn][Ee]|[Nn][Ss]|[Nn][Zz]|[Oo][Ll]|[Pp][Aa]|[Pp][Rr]|[Pp][Ss]|[Qq][Aa]|[Rr][Oo]|[Ss][Aa]|[Ss][Aa][Uu]|[Ss][Gg]|[Ss][Ii]|[Ss][Nn]|[Ss][Ss]|[Ss][Tt]|[Ss][Ww]|[Ss][Zz]|[Tt]|[Tt][Aa]|[Tt][Oo]|[Tt][Ww]|[Tt][Ww][Oo]|[Vv]|[Vv][Ii]|[Vv][Nn]|[Ww][Aa]))?$(?![\\s\\S])",
+              "description": "Instrument Graph key, case-insensitive: the company key for a stock (AAPL, BNY, BRK, SKHY), the product key for an ETF (SPY, EWG). 1-32 ASCII letters/digits with an optional documented venue suffix (SAP.DE). Share classes (BRK.A, BRK-B), cashtags and unknown suffixes return 422; other keys that are not Graph keys return 404. Listing aliases and keys used before the Graph switch are not accepted; use `/search` to find a company's key.",
               "examples": [
                 "TSLA",
-                "BRK.A"
+                "SKHY"
               ],
               "title": "Ticker"
             },
-            "description": "Stock ticker symbol (e.g., TSLA, $AAPL, BRK.A)"
+            "description": "Instrument Graph key, case-insensitive: the company key for a stock (AAPL, BNY, BRK, SKHY), the product key for an ETF (SPY, EWG). 1-32 ASCII letters/digits with an optional documented venue suffix (SAP.DE). Share classes (BRK.A, BRK-B), cashtags and unknown suffixes return 422; other keys that are not Graph keys return 404. Listing aliases and keys used before the Graph switch are not accepted; use `/search` to find a company's key."
           },
           {
             "name": "from",
@@ -13500,11 +13502,11 @@
             }
           },
           "503": {
-            "description": "Database temporarily unavailable",
+            "description": "Instrument Graph key lookup or database service unavailable; no legacy fallback is used",
             "content": {
               "application/json": {
                 "example": {
-                  "detail": "Database temporarily unavailable"
+                  "detail": "Polymarket identity lookup unavailable"
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
@@ -13521,6 +13523,22 @@
                 },
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unsupported ticker",
+            "content": {
+              "application/json": {
+                "example": {
+                  "detail": {
+                    "error_code": "unsupported_ticker",
+                    "message": "Unsupported ticker $XYZ. This ticker is not supported by Adanos v1."
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/UnsupportedAssetError"
                 }
               }
             }
@@ -13715,7 +13733,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -14845,10 +14863,10 @@
             "schema": {
               "type": "string",
               "pattern": "^(?=[A-Za-z0-9.]{1,32}$)[A-Za-z0-9]+(?:\\.(?:[Aa][Ee]|[Aa][Ss]|[Aa][Tt]|[Aa][Xx]|[Bb][Aa]|[Bb][Dd]|[Bb][Kk]|[Bb][Oo]|[Bb][Rr]|[Cc][Aa]|[Cc][Ll]|[Cc][Nn]|[Cc][Oo]|[Dd][Ee]|[Dd][Uu]|[Ff]|[Hh][Aa]|[Hh][Ee]|[Hh][Kk]|[Hh][Mm]|[Ii][Cc]|[Ii][Rr]|[Ii][Ss]|[Jj][Kk]|[Jj][Oo]|[Kk][Ll]|[Kk][Qq]|[Kk][Ss]|[Kk][Ww]|[Ll]|[Ll][Ss]|[Mm][Cc]|[Mm][Ii]|[Mm][Uu]|[Mm][Xx]|[Nn][Ee]|[Nn][Ss]|[Nn][Zz]|[Oo][Ll]|[Pp][Aa]|[Pp][Rr]|[Pp][Ss]|[Qq][Aa]|[Rr][Oo]|[Ss][Aa]|[Ss][Aa][Uu]|[Ss][Gg]|[Ss][Ii]|[Ss][Nn]|[Ss][Ss]|[Ss][Tt]|[Ss][Ww]|[Ss][Zz]|[Tt]|[Tt][Aa]|[Tt][Oo]|[Tt][Ww]|[Tt][Ww][Oo]|[Vv]|[Vv][Ii]|[Vv][Nn]|[Ww][Aa]))?$(?![\\s\\S])",
-              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
+              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
               "title": "Ticker"
             },
-            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
+            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
           },
           {
             "name": "from",
@@ -14964,7 +14982,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -15628,10 +15646,10 @@
             "schema": {
               "type": "string",
               "pattern": "^(?=[A-Za-z0-9.]{1,32}$)[A-Za-z0-9]+(?:\\.(?:[Aa][Ee]|[Aa][Ss]|[Aa][Tt]|[Aa][Xx]|[Bb][Aa]|[Bb][Dd]|[Bb][Kk]|[Bb][Oo]|[Bb][Rr]|[Cc][Aa]|[Cc][Ll]|[Cc][Nn]|[Cc][Oo]|[Dd][Ee]|[Dd][Uu]|[Ff]|[Hh][Aa]|[Hh][Ee]|[Hh][Kk]|[Hh][Mm]|[Ii][Cc]|[Ii][Rr]|[Ii][Ss]|[Jj][Kk]|[Jj][Oo]|[Kk][Ll]|[Kk][Qq]|[Kk][Ss]|[Kk][Ww]|[Ll]|[Ll][Ss]|[Mm][Cc]|[Mm][Ii]|[Mm][Uu]|[Mm][Xx]|[Nn][Ee]|[Nn][Ss]|[Nn][Zz]|[Oo][Ll]|[Pp][Aa]|[Pp][Rr]|[Pp][Ss]|[Qq][Aa]|[Rr][Oo]|[Ss][Aa]|[Ss][Aa][Uu]|[Ss][Gg]|[Ss][Ii]|[Ss][Nn]|[Ss][Ss]|[Ss][Tt]|[Ss][Ww]|[Ss][Zz]|[Tt]|[Tt][Aa]|[Tt][Oo]|[Tt][Ww]|[Tt][Ww][Oo]|[Vv]|[Vv][Ii]|[Vv][Nn]|[Ww][Aa]))?$(?![\\s\\S])",
-              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
+              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
               "title": "Ticker"
             },
-            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
+            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
           }
         ],
         "responses": {
@@ -15648,7 +15666,7 @@
                   "explanation": "GME is trending due to viral GameStop social media activity and large position posts on r/Superstonk.",
                   "cached": true,
                   "generated_at": "2026-01-13T14:30:00+00:00",
-                  "model": "google/gemma-4-31B-it-turbo"
+                  "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017"
                 }
               }
             },
@@ -15991,10 +16009,10 @@
             "schema": {
               "type": "string",
               "maxLength": 512,
-              "description": "Comma-separated News tickers. News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA. Unknown keys and known companies without activity return zero-activity entries; Compare does not distinguish these states. Ambiguous identities return 404.",
+              "description": "Comma-separated News tickers. News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA. Unknown keys, ambiguous keys and known companies without activity return zero-activity entries; Compare does not distinguish these states.",
               "title": "Tickers"
             },
-            "description": "Comma-separated News tickers. News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA. Unknown keys and known companies without activity return zero-activity entries; Compare does not distinguish these states. Ambiguous identities return 404."
+            "description": "Comma-separated News tickers. News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA. Unknown keys, ambiguous keys and known companies without activity return zero-activity entries; Compare does not distinguish these states."
           }
         ],
         "responses": {
@@ -16065,7 +16083,7 @@
                 "schema": {
                   "type": "string"
                 },
-                "example": "private, max-age=30"
+                "example": "private, max-age=300"
               },
               "Vary": {
                 "description": "Headers that private client caches must include in their cache key.",
@@ -16993,10 +17011,10 @@
             "schema": {
               "type": "string",
               "pattern": "^(?=[A-Za-z0-9.]{1,32}$)[A-Za-z0-9]+(?:\\.(?:[Aa][Ee]|[Aa][Ss]|[Aa][Tt]|[Aa][Xx]|[Bb][Aa]|[Bb][Dd]|[Bb][Kk]|[Bb][Oo]|[Bb][Rr]|[Cc][Aa]|[Cc][Ll]|[Cc][Nn]|[Cc][Oo]|[Dd][Ee]|[Dd][Uu]|[Ff]|[Hh][Aa]|[Hh][Ee]|[Hh][Kk]|[Hh][Mm]|[Ii][Cc]|[Ii][Rr]|[Ii][Ss]|[Jj][Kk]|[Jj][Oo]|[Kk][Ll]|[Kk][Qq]|[Kk][Ss]|[Kk][Ww]|[Ll]|[Ll][Ss]|[Mm][Cc]|[Mm][Ii]|[Mm][Uu]|[Mm][Xx]|[Nn][Ee]|[Nn][Ss]|[Nn][Zz]|[Oo][Ll]|[Pp][Aa]|[Pp][Rr]|[Pp][Ss]|[Qq][Aa]|[Rr][Oo]|[Ss][Aa]|[Ss][Aa][Uu]|[Ss][Gg]|[Ss][Ii]|[Ss][Nn]|[Ss][Ss]|[Ss][Tt]|[Ss][Ww]|[Ss][Zz]|[Tt]|[Tt][Aa]|[Tt][Oo]|[Tt][Ww]|[Tt][Ww][Oo]|[Vv]|[Vv][Ii]|[Vv][Nn]|[Ww][Aa]))?$(?![\\s\\S])",
-              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
+              "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA.",
               "title": "Ticker"
             },
-            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
+            "description": "News company key: 1-32 ASCII letters/digits with an optional documented venue suffix, case-insensitive. Examples: BRK, EADSY, ABX.DE. Share classes (BRK.A, BRK.B, BRK-B), hyphens, ampersands, cashtags and unknown suffixes return 422. A documented suffix resolves only if assigned to that issuer; other well-formed keys return 404 on individual endpoints. One issuer is one time series; ETFs stay separate issuers. Venue suffixes: .AE, .AS, .AT, .AX, .BA, .BD, .BK, .BO, .BR, .CA, .CL, .CN, .CO, .DE, .DU, .F, .HA, .HE, .HK, .HM, .IC, .IR, .IS, .JK, .JO, .KL, .KQ, .KS, .KW, .L, .LS, .MC, .MI, .MU, .MX, .NE, .NS, .NZ, .OL, .PA, .PR, .PS, .QA, .RO, .SA, .SAU, .SG, .SI, .SN, .SS, .ST, .SW, .SZ, .T, .TA, .TO, .TW, .TWO, .V, .VI, .VN, .WA."
           },
           {
             "name": "from",
@@ -17398,7 +17416,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "reddit-stocks",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "total_mentions": 12833,
                   "tickers_tracked": 65,
                   "scheduler": {
@@ -17467,7 +17485,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "reddit-crypto",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "total_mentions": 18352,
                   "tokens_tracked": 142,
                   "scheduler": {
@@ -17537,7 +17555,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "x-stocks",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "total_mentions": 15420,
                   "tickers_tracked": 247,
                   "scheduler": {
@@ -17606,7 +17624,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "polymarket-stocks",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "total_mentions": 8421,
                   "tickers_tracked": 119,
                   "scheduler": {
@@ -17675,7 +17693,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "reddit-stocks",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "total_mentions": 12833,
                   "tickers_tracked": 65,
                   "scheduler": {
@@ -17744,7 +17762,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "adanos-api",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "summary": {
                     "total": 5,
                     "healthy": 5,
@@ -17755,27 +17773,27 @@
                     "news-stocks": {
                       "service": "news-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "polymarket-stocks": {
                       "service": "polymarket-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "reddit-crypto": {
                       "service": "reddit-crypto",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "reddit-stocks": {
                       "service": "reddit-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "x-stocks": {
                       "service": "x-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     }
                   }
                 }
@@ -17808,7 +17826,7 @@
                 "example": {
                   "status": "healthy",
                   "service": "adanos-api",
-                  "version": "1.54.0",
+                  "version": "1.55.0",
                   "summary": {
                     "total": 5,
                     "healthy": 5,
@@ -17819,27 +17837,27 @@
                     "news-stocks": {
                       "service": "news-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "polymarket-stocks": {
                       "service": "polymarket-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "reddit-crypto": {
                       "service": "reddit-crypto",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "reddit-stocks": {
                       "service": "reddit-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     },
                     "x-stocks": {
                       "service": "x-stocks",
                       "status": "healthy",
-                      "version": "1.54.0"
+                      "version": "1.55.0"
                     }
                   }
                 }
@@ -18332,7 +18350,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily buzz scores (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values when data exists. Empty when no qualifying data exists.",
+            "description": "Daily buzz scores (oldest→newest). Length follows the resolved period, with a minimum of 7 values when data exists. Empty when no qualifying data exists.",
             "examples": [
               [
                 45.2,
@@ -18737,7 +18755,7 @@
             ],
             "title": "Version",
             "examples": [
-              "1.54.0"
+              "1.55.0"
             ]
           },
           "total_mentions": {
@@ -18784,7 +18802,7 @@
           {
             "status": "healthy",
             "service": "reddit-crypto",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "total_mentions": 18352,
             "tokens_tracked": 142,
             "scheduler": {
@@ -19018,7 +19036,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily service-wide Reddit Crypto heat scores (oldest\u2192newest), each calibrated relative to the trailing 90-day baseline. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
+            "description": "Daily service-wide Reddit Crypto heat scores (oldest→newest), each calibrated relative to the trailing 90-day baseline. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
             "examples": [
               [
                 47.1,
@@ -20469,7 +20487,7 @@
             "title": "Version",
             "description": "Service version",
             "examples": [
-              "1.54.0"
+              "1.55.0"
             ]
           },
           "total_mentions": {
@@ -20524,7 +20542,7 @@
           {
             "status": "healthy",
             "service": "reddit-stocks",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "total_mentions": 12833,
             "tickers_tracked": 65,
             "scheduler": {
@@ -21026,7 +21044,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily buzz scores (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values when data exists. Empty when no qualifying data exists.",
+            "description": "Daily buzz scores (oldest→newest). Length follows the resolved period, with a minimum of 7 values when data exists. Empty when no qualifying data exists.",
             "examples": [
               [
                 45.2,
@@ -21261,7 +21279,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily service-wide buzz scores (oldest\u2192newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
+            "description": "Daily service-wide buzz scores (oldest→newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
             "examples": [
               [
                 49.1,
@@ -21280,7 +21298,7 @@
             },
             "type": "array",
             "title": "Drivers",
-            "description": "Top assets by current buzz_score driving the service-level reading"
+            "description": "Top 5 stocks of the selected period by buzz_score. mentions and sentiment_score cover every day of the period."
           }
         },
         "type": "object",
@@ -22768,7 +22786,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily buzz scores (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values. Values 0-100.",
+            "description": "Daily buzz scores (oldest→newest). Length follows the resolved period, with a minimum of 7 values. Values 0-100.",
             "examples": [
               [
                 12.3,
@@ -22879,7 +22897,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol"
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)"
           },
           "company_name": {
             "anyOf": [
@@ -22891,7 +22909,7 @@
               }
             ],
             "title": "Company Name",
-            "description": "Company name"
+            "description": "Instrument Graph company name; the product name for an ETF; null for a key that is not a Graph key"
           },
           "buzz_score": {
             "anyOf": [
@@ -23009,7 +23027,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Recent buzz history (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values when data exists. Closed historical windows end at `to`. Empty when no qualifying data exists."
+            "description": "Recent buzz history (oldest→newest). Length follows the resolved period, with a minimum of 7 values when data exists. Closed historical windows end at `to`. Empty when no qualifying data exists."
           }
         },
         "type": "object",
@@ -23142,7 +23160,7 @@
             "title": "Version",
             "description": "API version",
             "examples": [
-              "1.54.0"
+              "1.55.0"
             ]
           },
           "total_mentions": {
@@ -23195,7 +23213,7 @@
           {
             "status": "healthy",
             "service": "polymarket-stocks",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "total_mentions": 8421,
             "tickers_tracked": 119,
             "scheduler": {
@@ -23213,7 +23231,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol",
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)",
             "examples": [
               "AAPL"
             ]
@@ -23444,7 +23462,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily service-wide buzz scores (oldest\u2192newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
+            "description": "Daily service-wide buzz scores (oldest→newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
             "examples": [
               [
                 52.1,
@@ -23892,7 +23910,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol",
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)",
             "examples": [
               "NVDA"
             ]
@@ -24093,7 +24111,7 @@
                 "country": "United States",
                 "aliases": [
                   "Tesla",
-                  "Elon"
+                  "TSLA"
                 ],
                 "summary": {
                   "trade_count": 14,
@@ -24117,7 +24135,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol",
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG); the key every Polymarket endpoint accepts",
             "examples": [
               "TSLA"
             ]
@@ -24125,7 +24143,7 @@
           "name": {
             "type": "string",
             "title": "Name",
-            "description": "Company name",
+            "description": "Instrument Graph company name; the product name for an ETF",
             "examples": [
               "Tesla Inc."
             ]
@@ -24140,7 +24158,7 @@
               }
             ],
             "title": "Type",
-            "description": "Asset type (Stock, ETF, etc.)",
+            "description": "Instrument Graph asset type: Stock or ETF",
             "examples": [
               "Stock"
             ]
@@ -24155,7 +24173,7 @@
               }
             ],
             "title": "Exchange",
-            "description": "Stock exchange",
+            "description": "Exchange of the key's primary listing",
             "examples": [
               "NASDAQ"
             ]
@@ -24170,7 +24188,7 @@
               }
             ],
             "title": "Sector",
-            "description": "Industry sector",
+            "description": "Issuer sector; null for ETFs",
             "examples": [
               "Consumer Discretionary"
             ]
@@ -24185,7 +24203,7 @@
               }
             ],
             "title": "Country",
-            "description": "Country of headquarters",
+            "description": "Issuer country, else the primary listing's country",
             "examples": [
               "United States"
             ]
@@ -24196,11 +24214,11 @@
             },
             "type": "array",
             "title": "Aliases",
-            "description": "Alternative names/aliases",
+            "description": "Instrument Graph names and listing symbols the company is matched by",
             "examples": [
               [
                 "Tesla",
-                "Elon"
+                "TSLA"
               ]
             ]
           },
@@ -24351,7 +24369,7 @@
             "type": "integer",
             "minimum": 0.0,
             "title": "Supported Tickers",
-            "description": "Number of supported stock tickers"
+            "description": "Number of Instrument Graph keys Polymarket accepts (company keys and ETF product keys), as on News"
           }
         },
         "type": "object",
@@ -24382,7 +24400,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol",
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)",
             "examples": [
               "AAPL"
             ]
@@ -24397,7 +24415,7 @@
               }
             ],
             "title": "Company Name",
-            "description": "Company name",
+            "description": "Instrument Graph company name; the product name for an ETF",
             "examples": [
               "Apple Inc."
             ]
@@ -25356,7 +25374,7 @@
           "ticker": {
             "type": "string",
             "title": "Ticker",
-            "description": "Stock ticker symbol",
+            "description": "Instrument Graph key: the company key for a stock (AAPL, BNY), the product key for an ETF (EWG)",
             "examples": [
               "TSLA"
             ]
@@ -25371,7 +25389,7 @@
               }
             ],
             "title": "Company Name",
-            "description": "Company name",
+            "description": "Instrument Graph company name; the product name for an ETF",
             "examples": [
               "Tesla, Inc."
             ]
@@ -25501,7 +25519,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Recent buzz history (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values. Closed historical windows end at `to`.",
+            "description": "Recent buzz history (oldest→newest). Length follows the resolved period, with a minimum of 7 values. Closed historical windows end at `to`.",
             "examples": [
               [
                 48.2,
@@ -25877,7 +25895,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily service-wide buzz scores (oldest\u2192newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
+            "description": "Daily service-wide buzz scores (oldest→newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
             "examples": [
               [
                 49.8,
@@ -26250,7 +26268,7 @@
             "title": "Version",
             "description": "Service version",
             "examples": [
-              "1.54.0"
+              "1.55.0"
             ]
           },
           "summary": {
@@ -26280,7 +26298,7 @@
           {
             "status": "healthy",
             "service": "adanos-api",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "summary": {
               "total": 5,
               "healthy": 5,
@@ -26291,27 +26309,27 @@
               "news-stocks": {
                 "service": "news-stocks",
                 "status": "healthy",
-                "version": "1.54.0"
+                "version": "1.55.0"
               },
               "polymarket-stocks": {
                 "service": "polymarket-stocks",
                 "status": "healthy",
-                "version": "1.54.0"
+                "version": "1.55.0"
               },
               "reddit-crypto": {
                 "service": "reddit-crypto",
                 "status": "healthy",
-                "version": "1.54.0"
+                "version": "1.55.0"
               },
               "reddit-stocks": {
                 "service": "reddit-stocks",
                 "status": "healthy",
-                "version": "1.54.0"
+                "version": "1.55.0"
               },
               "x-stocks": {
                 "service": "x-stocks",
                 "status": "healthy",
-                "version": "1.54.0"
+                "version": "1.55.0"
               }
             }
           }
@@ -26733,7 +26751,7 @@
               }
             ],
             "title": "Model Score",
-            "description": "Raw model score from -1 to +1: the probability of positive minus the probability of negative. `sentiment_score` maps it onto the shared scale, where \u00b10.14 separates positive and negative from neutral.",
+            "description": "Raw model score from -1 to +1: the probability of positive minus the probability of negative. `sentiment_score` maps it onto the shared scale, where ±0.14 separates positive and negative from neutral.",
             "examples": [
               0.9988
             ]
@@ -26907,7 +26925,7 @@
             "title": "Model",
             "description": "LLM model used for generation",
             "examples": [
-              "google/gemma-4-31B-it-turbo"
+              "deepseek-ai/DeepSeek-V4.1-Flash-1017"
             ]
           }
         },
@@ -26927,7 +26945,7 @@
             "explanation": "GME is trending due to viral GameStop social media activity and large position posts on r/Superstonk.",
             "cached": true,
             "generated_at": "2026-01-13T14:30:00+00:00",
-            "model": "google/gemma-4-31B-it-turbo"
+            "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017"
           }
         ]
       },
@@ -27975,7 +27993,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily buzz scores (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values. Values 0-100.",
+            "description": "Daily buzz scores (oldest→newest). Length follows the resolved period, with a minimum of 7 values. Values 0-100.",
             "examples": [
               [
                 12.3,
@@ -28458,7 +28476,7 @@
             "title": "Version",
             "description": "Current API version",
             "examples": [
-              "1.54.0"
+              "1.55.0"
             ]
           },
           "total_mentions": {
@@ -28515,7 +28533,7 @@
           {
             "status": "healthy",
             "service": "x-stocks",
-            "version": "1.54.0",
+            "version": "1.55.0",
             "total_mentions": 15420,
             "tickers_tracked": 247,
             "scheduler": {
@@ -28748,7 +28766,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily service-wide buzz scores (oldest\u2192newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
+            "description": "Daily service-wide buzz scores (oldest→newest) using the same relative baseline calibration. Length = max(requested_days, 7) for successful requests; windows before platform availability return HTTP 422.",
             "examples": [
               [
                 48.9,
@@ -29703,7 +29721,7 @@
             ],
             "top_tweets": [
               {
-                "text_snippet": "$TSLA breaking out! \ud83d\ude80",
+                "text_snippet": "$TSLA breaking out! 🚀",
                 "sentiment_score": 0.85,
                 "sentiment_label": "positive",
                 "likes": 1247,
@@ -29806,7 +29824,7 @@
             "title": "Text Snippet",
             "description": "Clean tweet paragraph around the detected ticker mention (truncated to 280 chars for this view)",
             "examples": [
-              "$TSLA breaking out! This is the move we've been waiting for \ud83d\ude80"
+              "$TSLA breaking out! This is the move we've been waiting for 🚀"
             ]
           },
           "sentiment_score": {
@@ -29916,7 +29934,7 @@
         "description": "Top tweet mention for a stock - highest engagement tweets.",
         "examples": [
           {
-            "text_snippet": "$TSLA breaking out! This is the move we've been waiting for \ud83d\ude80",
+            "text_snippet": "$TSLA breaking out! This is the move we've been waiting for 🚀",
             "sentiment_score": 0.85,
             "sentiment_label": "positive",
             "likes": 1247,
@@ -30502,7 +30520,7 @@
             },
             "type": "array",
             "title": "Trend History",
-            "description": "Daily buzz scores (oldest\u2192newest). Length follows the resolved period, with a minimum of 7 values. For live windows, the final value is the current live buzz_score; closed historical windows end at `to`.",
+            "description": "Daily buzz scores (oldest→newest). Length follows the resolved period, with a minimum of 7 values. For live windows, the final value is the current live buzz_score; closed historical windows end at `to`.",
             "examples": [
               [
                 45.2,
